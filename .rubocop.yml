@@ -1,0 +1,40 @@
+require: rubocop-rspec
+
+AllCops:
+  TargetRubyVersion: 2.3.5
+
+Style/Documentation:
+  Enabled: false
+
+Style/HashSyntax:
+  EnforcedStyle: ruby19
+
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: consistent_comma
+
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: consistent_comma
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: consistent_comma
+
+Layout/AccessModifierIndentation:
+  EnforcedStyle: outdent
+
+Style/SignalException:
+  EnforcedStyle: semantic
+
+Metrics/LineLength:
+  Max: 120
+
+Metrics/ClassLength:
+  Max: 150
+
+Metrics/ModuleLength:
+  Max: 150
+
+Style/Documentation:
+  Enabled: false
+
+Style/HashSyntax:
+  EnforcedStyle: ruby19

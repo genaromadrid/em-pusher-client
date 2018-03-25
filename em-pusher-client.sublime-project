@@ -1,0 +1,13 @@
+{
+  "folders":
+  [
+    {
+      "file_exclude_patterns": ["*.sublime-workspace"],
+      "folder_exclude_patterns": ["tmp", "coverage", "log", "pkg"],
+      "path": ".",
+      "follow_symlinks": true,
+      "tab_size": 2,
+      "translate_tabs_to_spaces": false,
+    }
+  ]
+}
