@@ -6,6 +6,13 @@ AllCops:
 Style/Documentation:
   Enabled: false
 
+Metrics/BlockLength:
+  Exclude:
+    - Guardfile
+    - 'spec/**/*'
+    - 'examples/**/*'
+    - '*.gemspec'
+
 Style/HashSyntax:
   EnforcedStyle: ruby19
 
@@ -38,3 +45,6 @@ Style/Documentation:
 
 Style/HashSyntax:
   EnforcedStyle: ruby19
+
+RSpec/ExampleLength:
+  Max: 10
