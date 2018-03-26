@@ -32,7 +32,7 @@ module EM
         end
 
         def connection_completed
-          @connect&.yield
+          @connect.yield if @connect
           @hs = ::WebSocket::Handshake::Client.new(
             url:     @url,
             origin:  @origin,
@@ -90,7 +90,7 @@ module EM
 
         def unbind
           super
-          @disconnect&.call
+          @disconnect.call if @disconnect
         end
 
       private
@@ -98,7 +98,7 @@ module EM
         def handle_received_data(data)
           @frame << data
           while (msg = @frame.next)
-            @stream&.call(EM::Pusher::Client::MsgParser.new(msg))
+            @stream.call(EM::Pusher::Client::MsgParser.new(msg)) if @stream
           end
         end
       end
