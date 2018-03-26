@@ -43,8 +43,8 @@ Metrics/ModuleLength:
 Style/Documentation:
   Enabled: false
 
-Style/HashSyntax:
-  EnforcedStyle: ruby19
-
 RSpec/ExampleLength:
   Max: 10
+
+Style/SafeNavigation:
+  Enabled: false
