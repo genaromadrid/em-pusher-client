@@ -19,7 +19,7 @@ __INITIAL__ = ['0', '0', '1']
 if __name__ == "__main__":
     v = []
     try:
-        version_file = glob.glob("lib/*/version.rb")[0]
+        version_file = glob.glob("lib/em/pusher/client/version.rb")[0]
         raw_v = re.search(r'VERSION = \'(.*)\'', open(version_file).read(), re.M|re.I|re.S).group(1)
         v = re.split(re.compile("\.|-"), raw_v)
         v = v[0:3]
@@ -28,10 +28,6 @@ if __name__ == "__main__":
     except ValueError:
         print("failed to parse the existing VERSION file, assuming v 0.0.1")
         v = ['0', '0', '1']
-
-    except FileNotFoundError:
-        print("failed to find a VERSION file, assuming v 0.0.0")
-        v = ['0', '0', '0']
 
     op = ''
     try:
