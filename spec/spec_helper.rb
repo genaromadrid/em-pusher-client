@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 require 'simplecov'
-SimpleCov.start
+require 'coveralls'
+SimpleCov.start do
+  add_filter '/spec/'
+end
+Coveralls.wear!
 
 require 'pry'
 require 'em/pusher/client'
