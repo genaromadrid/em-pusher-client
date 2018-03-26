@@ -29,7 +29,7 @@ module EM
 
       def self.url(options)
         opts = DEFAULT_OPTIONS.merge(options)
-        REQUIRED_OPTIONS.each { |opt| fail "option #{opt} is required" unless opts[opt] }
+        REQUIRED_OPTIONS.each { |opt| fail ArgumentError, "option #{opt} is required" unless opts[opt] }
         "#{opts[:scheme]}://ws-#{opts[:cluster]}.pusher.com:#{opts[:port]}/app/#{opts[:key]}" \
           "?protocol=#{opts[:protocol]}" \
           "&client=#{opts[:client_name]}" \

@@ -31,7 +31,7 @@ module EM
               json['data']
             end
         rescue JSON::ParserError => e
-          puts e.message
+          puts "Error parsing event '#{event}': '#{e.message}'"
           # logger.error("Error parsing msg #{e}")
         end
       end
