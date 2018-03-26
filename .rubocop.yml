@@ -10,6 +10,7 @@ Metrics/BlockLength:
   Exclude:
     - Guardfile
     - 'spec/**/*'
+    - 'examples/**/*'
     - '*.gemspec'
 
 Style/HashSyntax:
