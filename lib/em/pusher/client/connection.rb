@@ -4,6 +4,7 @@ require 'eventmachine'
 require 'uri'
 require 'json'
 require 'websocket'
+require 'openssl'
 
 module EM
   module Pusher
@@ -53,6 +54,14 @@ module EM
           @disconnect = cback
         end
 
+        def connection_established(&cback)
+          @connection_established = cback
+        end
+
+        def ping(&cback)
+          @ping = cback
+        end
+
         # https://pusher.com/docs/pusher_protocol#subscription-events
         def subscribe(channel, auth = nil, channel_data = nil)
           msg = {
@@ -98,8 +107,34 @@ module EM
         def handle_received_data(data)
           @frame << data
           while (msg = @frame.next)
-            @stream.call(EM::Pusher::Client::MsgParser.new(msg)) if @stream
+            process_data(EM::Pusher::Client::MsgParser.new(msg))
           end
+        end
+
+        def process_data(parser)
+          if parser.event == 'pusher:connection_established'
+            process_connection(parser)
+          elsif parser.type == :ping
+            process_ping
+          elsif parser.type == :close
+            process_close
+          end
+          @stream.call(parser) if @stream
+        end
+
+        def process_connection(parser)
+          socket_id = JSON.parse(parser.json['data'])['socket_id']
+          @connection_established.yield(socket_id) if @connection_established
+        end
+
+        def process_ping
+          @ping.yield if @ping
+          send_msg(event: 'pusher:pong')
+        end
+
+        def process_close
+          unbind
+          close_connection
         end
       end
     end

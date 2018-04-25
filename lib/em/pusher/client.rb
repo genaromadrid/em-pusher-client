@@ -27,6 +27,17 @@ module EM
         end
       end
 
+      def self.sign(secret, socket_id, channel_name)
+        digest = OpenSSL::Digest::SHA256.new
+        string_to_sign = "#{socket_id}:#{channel_name}"
+        OpenSSL::HMAC.hexdigest(digest, secret, string_to_sign)
+      end
+
+      def self.build_auth(secret, key, socket_id, channel_name)
+        sig = sign(secret, socket_id, channel_name)
+        "#{key}:#{sig}"
+      end
+
       def self.url(options)
         opts = DEFAULT_OPTIONS.merge(options)
         REQUIRED_OPTIONS.each { |opt| fail ArgumentError, "option #{opt} is required" unless opts[opt] }
