@@ -51,7 +51,7 @@ RSpec.describe EM::Pusher::Client::MsgParser do
       let!(:parser) { described_class.new(build_msg(malformed)) }
 
       it { expect(parser.event).to eq('pusher:someevent') }
-      it { expect(parser.data).to be_nil }
+      it { expect(parser.data).to eq({}) }
       it { expect(parser.to_s).to eq(malformed) }
     end
   end

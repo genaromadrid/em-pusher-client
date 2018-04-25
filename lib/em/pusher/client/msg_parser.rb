@@ -4,14 +4,12 @@ module EM
   module Pusher
     module Client
       class MsgParser
-        attr_reader :json,
-                    :data
-
         def initialize(msg)
-          parse(msg)
+          @msg = msg
         end
 
         def event
+          return '{}' unless json
           @event ||= json['event']
         end
 
@@ -19,20 +17,25 @@ module EM
           @msg.to_s
         end
 
-      private
+        def type
+          @msg.type
+        end
 
-        def parse(msg)
-          @msg = msg
-          @json = JSON.parse(msg.data)
+        def json
+          @json ||= JSON.parse(@msg.data)
+        rescue JSON::ParserError
+          {}
+        end
+
+        def data
           @data =
             if json['data'].is_a?(String)
               JSON.parse(json['data'])
             else
               json['data']
             end
-        rescue JSON::ParserError => e
-          puts "Error parsing event '#{event}': '#{e.message}'"
-          # logger.error("Error parsing msg #{e}")
+        rescue JSON::ParserError
+          {}
         end
       end
     end
